@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ASCII-ART-WEB</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+  </head>
+  <body>
+    <div class="window">
+      <div class="window-title-bar">
+        <span class="window-title">Ascii_Art_Generator</span>
+      </div>
+      <div class="ascii-result">
+        <p>Text is <mark>{{.text}}</mark></p>
+        <p>Theme is <mark>{{.banner}}</mark></p>
+        <pre class="result" style="color: black; overflow-x: auto" style="width: 100px;">
+{{.ascii_export}}</pre
+        >
+      </div>
+    </div>
+  </body>
+</html>
