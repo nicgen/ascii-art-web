@@ -9,7 +9,7 @@
 
 Ascii-art-web consists in creating and running a server, in which it will be possible to use a web GUI (graphical user interface) version of your last project, [ascii-art](https://github.com/01-edu/public/tree/master/subjects/ascii-art).
 
-## Requisite
+## Requirements
 
 - [Go](https://golang.org/dl/) (min version 1.22.0)
 
