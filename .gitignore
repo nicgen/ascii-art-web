@@ -21,3 +21,9 @@
 # Go workspace file
 #go.work
 
+# AIR
+.air.toml
+tmp
+
+# src
+static/fonts/src

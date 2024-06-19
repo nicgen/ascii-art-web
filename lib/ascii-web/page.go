@@ -31,8 +31,8 @@ func LoadPage(title string) (*Page, error) {
 
 // renderTemplate renders the template with given data
 func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
-	tmplPath := filepath.Join("src/html/templates", tmpl) //Set the path of the html files we want to tmplPath, we join "templates" and the html file name
-	t, err := template.ParseFiles(tmplPath)               //Parse the template file to analyse it to find where to put data
+	tmplPath := filepath.Join("static/html/templates", tmpl) //Set the path of the html files we want to tmplPath, we join "templates" and the html file name
+	t, err := template.ParseFiles(tmplPath)                  //Parse the template file to analyse it to find where to put data
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -43,7 +43,13 @@ func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
 
 // homeHandler serves the main page
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	RenderTemplate(w, "index.html", nil)
+	// RenderTemplate(w, "index.html", nil)
+	if r.URL.Path != "/" {
+		fmt.Println("test")
+		RenderTemplate(w, "error.html", nil)
+	} else {
+		RenderTemplate(w, "index.html", nil)
+	}
 }
 
 // asciiArtHandler handles the conversion of text to ASCII art
@@ -52,11 +58,11 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
-
 	r.ParseForm()
-	text := ""
-	fmt.Println("TEXT:", r.FormValue("text"))
-	text = strings.ReplaceAll(r.FormValue("text"), "\r\n", "\n") //replace \r\n of textarea new line by \n
+	// text := ""
+	fmt.Printf("TEXT:%v, type: %T", r.FormValue("text"), r.FormValue("text"))
+	text := strings.ReplaceAll(r.FormValue("text"), "\r\n", `\n`) //replace \r\n of textarea new line by \n
+	// text := r.FormValue("text")
 	fmt.Println("TEXT:", r.FormValue("text"))
 	banner := r.FormValue("banner")
 	fmt.Println("BANNER:", r.FormValue("banner"))
@@ -65,11 +71,11 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	var themeFile string
 	switch banner {
 	case "standard":
-		themeFile = "src/themes/standard.txt"
+		themeFile = "static/themes/standard.txt"
 	case "shadow":
-		themeFile = "src/themes/shadow.txt"
+		themeFile = "static/themes/shadow.txt"
 	case "thinkertoy":
-		themeFile = "src/themes/thinkertoy.txt"
+		themeFile = "static/themes/thinkertoy.txt"
 	default:
 		http.Error(w, "Invalid banner", http.StatusBadRequest)
 		return
@@ -79,7 +85,9 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	// var file_content []string
 	file_content := ASCII.FileToLine(themeFile)
 	// fmt.Println(file_content)
-	ascii_art := ASCII.TransformAscii(text, file_content)
+	ascii_art := ASCII.BothAscii(text, "static/export/ascii-art.txt", file_content)
+	// ASCII.BothAscii(text, "ascii_art.txt", file_content)
+
 	// if err != nil {
 	// 	http.Error(w, fmt.Sprintf("Failed to convert text to ASCII art: %v", err), http.StatusInternalServerError)
 	// 	return
@@ -91,7 +99,7 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 		"ascii_export": ascii_art,
 	}
 
-	fmt.Println("[DATA]Input:", data["text"])
+	fmt.Printf("[DATA]Input: %v", data["text"])
 	fmt.Println("[DATA]banner:", data["banner"])
 	fmt.Println("[DATA]ascii:\n", data["ascii_export"])
 

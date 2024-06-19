@@ -53,3 +53,15 @@ func ExportAscii(input, output string, file_content []string) {
 		fmt.Printf("%s", content)
 	}
 }
+
+// Return ASCII and export to a txt file
+func BothAscii(input, output string, file_content []string) string {
+	fmt.Println("[BothAscii]: ", output)
+	content := TransformAscii(input, file_content)
+	if output != "" {
+		WriteFile(output, content)
+	} else {
+		fmt.Printf("%s", content)
+	}
+	return content
+}
