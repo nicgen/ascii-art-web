@@ -15,7 +15,7 @@ Ascii-art-web consists in creating and running a server, in which it will be pos
 
 ## Install
 
-1. Clone the repo :
+1. Clone the repo:
 
 ```bash
 git clone https://zone01normandie.org/git/ncourtel/ascii-art-web
@@ -24,17 +24,21 @@ cd ascii-art-web
 
 ## Usage
 
-1. Run the app :
+1. Run the app:
 
 ```bash
-go run main.go
+go run main.go*
 ```
+
+2. Go to `localhost:8080` and test-it!
+
+3. Have fun
 
 ## Project structure:
 
-- main.go: main file that creates the server aand link the pages
-- lib: contains the functions used by the app
-- static: contains the static files like the css, images, icons and the ASCII themes used
+- **main.go**: main file that creates the server aand link the pages
+- **lib**: contains the functions used by the app
+- **static**: contains the static files like the css, images, icons and the ASCII themes used
 
 ## Attribution
 
