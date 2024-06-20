@@ -1,42 +1,28 @@
 @font-face {
-  font-family: Segoe UI;
-  src:
-      local("Segoe UI Light"),
-      url(https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/light/latest.woff2) format("woff2"),
-      url(https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/light/latest.woff) format("woff"),
-      url(https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/light/latest.ttf) format("truetype");
-  font-weight: 100;
+  font-family: "Pixelated MS Sans Serif";
+  src: url("/static/fonts/converted/ms_sans_serif.woff") format("woff");
+  src: url("/static/fonts/converted/ms_sans_serif.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-  font-family: Segoe UI;
-  src:
-      local("Segoe UI Semilight"),
-      url(https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff2) format("woff2"),
-      url(https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff) format("woff"),
-      url(https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.ttf) format("truetype");
-  font-weight: 200;
-}
-
-@font-face {
-  font-family: Segoe UI;
-  src:
-      local("Segoe UI"),
-      url(https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2) format("woff2"),
-      url(https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff) format("woff"),
-      url(https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.ttf) format("truetype");
-  font-weight: 400;
+  font-family: "Pixelated MS Sans Serif";
+  src: url("/static/fonts/converted/ms_sans_serif_bold.woff") format("woff");
+  src: url("/static/fonts/converted/ms_sans_serif_bold.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
 }
 
 h1, h2, h3, h4, h5, h6 {
-font-family: "Segoe UI Light";
+font-family: "Arial";
 font-weight: 300;
 }
 
 body {
-font-family: "Segoe UI";
+font-family: "Pixelated MS Sans Serif";
 color: #FFF;
-background: #106faa;
+background: #000080;
 margin: 0;
 }
 
@@ -46,7 +32,7 @@ margin-right: 30%;
 }
 
 .emotion {
-font-family: "Segoe UI";
+font-family: "Arial";
 font-size: 8em;
 margin: 0;
 }

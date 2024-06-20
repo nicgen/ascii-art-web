@@ -62,7 +62,6 @@
   --default-button-border-sunken-outer: inset 2px 2px var(--window-frame), inset -1px -1px var(--window-frame);
   --default-button-border-sunken-inner: inset -2px -2px var(--button-highlight), inset 3px 3px var(--button-shadow), inset -3px -3px var(--button-face);
 
-
   /* Window borders flip button-face and button-highlight */
   --border-window-outer: inset -1px -1px var(--window-frame),
     inset 1px 1px var(--button-face);
@@ -83,16 +82,16 @@
 
 @font-face {
   font-family: "Pixelated MS Sans Serif";
-  src: url("fonts/converted/ms_sans_serif.woff") format("woff");
-  src: url("fonts/converted/ms_sans_serif.woff2") format("woff2");
+  src: url("/static/fonts/converted/ms_sans_serif.woff") format("woff");
+  src: url("/static/fonts/converted/ms_sans_serif.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Pixelated MS Sans Serif";
-  src: url("fonts/converted/ms_sans_serif_bold.woff") format("woff");
-  src: url("fonts/converted/ms_sans_serif_bold.woff2") format("woff2");
+  src: url("/static/fonts/converted/ms_sans_serif_bold.woff") format("woff");
+  src: url("/static/fonts/converted/ms_sans_serif_bold.woff2") format("woff2");
   font-weight: bold;
   font-style: normal;
 }
@@ -970,8 +969,7 @@ table > tbody > tr > * {
 
 body{
   box-sizing: border-box;
-  /* background-color: red; */
-  background-image: url("/static/img/windows_wallpaper.jpg");
+  /* background-color: black; */
 }
 
 body, .desktop, .pre {
@@ -984,6 +982,11 @@ body, .desktop, .pre {
 }
 
 .desktop{
+  background-image: url("/static/img/windows_wallpaper.jpg");
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
+  background-attachment: fixed;
   padding: 0px;
   width: 100vw;
   height: 100vh;
@@ -992,13 +995,13 @@ body, .desktop, .pre {
 .window {
   position: absolute;
   align-self: center;
-  z-index: 99;
+  z-index: 666;
   width: 400px;
   left: 0; 
   right: 0; 
   margin-left: auto; 
   margin-right: auto;
-  top: 20%
+  top: 10%
 }
 
 .window-body > div {
@@ -1013,7 +1016,7 @@ body, .desktop, .pre {
 
 textarea {
   width: 100%;
-  height: 100px;
+  height: 70px;
 }
 
 form > div {
@@ -1021,7 +1024,7 @@ form > div {
 }
 
 pre {
-  max-height: 200px;
+  max-height: 230px;
   margin-bottom: 20px;
 }
 
@@ -1051,17 +1054,21 @@ pre {
 
 @media (width <= 700px) {
   .window {
-    max-width: 400px;
+    width: 90%;
+    max-width: 350px;
     min-width: 300px;
+    top: 10%;
   }
 }
 
 @media (width > 700px) {
   .window {
-    width: 600px;
+    width: 60%;
+    max-width: 700px;
+    min-width: 350px;
+    top: 10%;
   }
   textarea {
     width: 100%;
-    height: 300px;
   }
 }
