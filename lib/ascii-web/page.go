@@ -37,7 +37,7 @@ func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	fmt.Println(data)
+	// fmt.Println(data)
 	t.Execute(w, data) //execute the template and use the data inside the parse template
 }
 
@@ -45,8 +45,8 @@ func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	// RenderTemplate(w, "index.html", nil)
 	if r.URL.Path != "/" {
-		fmt.Println("test")
-		RenderTemplate(w, "error.html", nil)
+		w.WriteHeader(404) // return error 404 (forced, bad practice)
+		RenderTemplate(w, "404.html", nil)
 	} else {
 		RenderTemplate(w, "index.html", nil)
 	}
@@ -54,18 +54,19 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 // asciiArtHandler handles the conversion of text to ASCII art
 func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
+	if r.Method != http.MethodGet {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
 	r.ParseForm()
 	// text := ""
-	fmt.Printf("TEXT:%v, type: %T", r.FormValue("text"), r.FormValue("text"))
+	// fmt.Printf("TEXT:%v, type: %T", r.FormValue("text"), r.FormValue("text"))
 	text := strings.ReplaceAll(r.FormValue("text"), "\r\n", `\n`) //replace \r\n of textarea new line by \n
+	// text := strings.ReplaceAll(r.Form.Get("text"), "\r\n", `\n`)
 	// text := r.FormValue("text")
-	fmt.Println("TEXT:", r.FormValue("text"))
-	banner := r.FormValue("banner")
-	fmt.Println("BANNER:", r.FormValue("banner"))
+	// fmt.Println("TEXT:", r.Form.Get("text"))
+	banner := r.Form.Get("banner")
+	fmt.Println("BANNER:", r.Form.Get("banner"))
 
 	// Determine the banner file to use
 	var themeFile string
@@ -88,20 +89,19 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	ascii_art := ASCII.BothAscii(text, "static/export/ascii-art.txt", file_content)
 	// ASCII.BothAscii(text, "ascii_art.txt", file_content)
 
-	// if err != nil {
-	// 	http.Error(w, fmt.Sprintf("Failed to convert text to ASCII art: %v", err), http.StatusInternalServerError)
-	// 	return
-	// }
-
 	data := map[string]string{
 		"text":         text,
 		"banner":       banner,
 		"ascii_export": ascii_art,
 	}
 
-	fmt.Printf("[DATA]Input: %v", data["text"])
-	fmt.Println("[DATA]banner:", data["banner"])
-	fmt.Println("[DATA]ascii:\n", data["ascii_export"])
-
-	RenderTemplate(w, "result.html", data)
+	fmt.Printf("input: %v theme: %v", data["text"], data["banner"])
+	// fmt.Printf("[DATA]Input: %v", data["text"])
+	// fmt.Println("[DATA]banner:", data["banner"])
+	// fmt.Println("[DATA]ascii:\n", data["ascii_export"])
+	RenderTemplate(w, "index.html", data)
+	// if err != nil {
+	// 	http.Error(w, fmt.Sprintf("Failed to convert text to ASCII art: %v", err), http.StatusInternalServerError)
+	// 	return
+	// }
 }

@@ -44,7 +44,14 @@ go run main.go*
 
 - The FontStruction “[MS Sans Serif Bold](https://fontstruct.com/fontstructions/show/1384862)" by “lou” is licensed under a Creative Commons Attribution Share Alike license (http://creativecommons.org/licenses/by-sa/3.0/).
 
-
 ## Licence
 
 MIT License
+
+<!-- TODO:
+- problem with static/export
+- if empty, show msg
+- error 404 text content is wrong
+- print only useful logs
+- handle errors
+-->

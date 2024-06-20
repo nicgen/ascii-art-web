@@ -5,70 +5,103 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ASCII-ART-WEB</title>
     <link rel="stylesheet" href="/static/css/style.css" type="text/css" />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/static/icon/apple-touch-icon.png"
+    />
     <link
       rel="icon"
-      href="/static/icon/w98_windows-2.png"
-      type="image/x-icon"
+      type="image/png"
+      sizes="32x32"
+      href="/static/icon/favicon-32x32.png"
     />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/static/icon/favicon-16x16.png"
+    />
+    <link rel="icon" href="/static/icon/favicon.ico" />
+    <link rel="manifest" href="/static/icon/site.webmanifest" />
+
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"> -->
   </head>
   <body>
-    <div class="icons">
-      <div class="icon" id="recycle-bin">
-        <img src="/static/icon/w98_recycle_bin_empty-1.png" alt="Recycle Bin" />
-        <span>Recycle Bin</span>
-      </div>
-      <div class="icon" id="my-computer">
-        <img src="/static/icon/w2k-computer-1.png" alt="My Computer" />
-        <span>My Computer</span>
-      </div>
-      <div class="icon" id="folder">
-        <img src="/static/icon/w2k-documents-4.png" alt="Folder" />
-        <span>Not Pr0n</span>
-      </div>
-      <div class="icon" id="internet-explorer">
-        <a href="https://www.youtube.com/watch?v=J3FTt4e7omc" target="_blank">
+    <div class="desktop">
+      <div class="icons">
+        <div class="icon" id="recycle-bin">
           <img
-            src="/static/icon/w2k_internet_explorer-1.png"
-            alt="Internet Explorer"
+            src="/static/icon/w98_recycle_bin_empty-1.png"
+            alt="Recycle Bin"
           />
-        </a>
-        <span>Internet Explorer</span>
-      </div>
-    </div>
-
-    <div class="window">
-      <div class="title-bar">
-        <div class="title-bar-text">ASCII Art Generator</div>
-        <div class="title-bar-controls">
-          <button aria-label="Close"></button>
+          <span>Recycle Bin</span>
+        </div>
+        <div class="icon" id="my-computer">
+          <img src="/static/icon/w2k-computer-1.png" alt="My Computer" />
+          <span>My Computer</span>
+        </div>
+        <div class="icon" id="folder">
+          <img src="/static/icon/w2k-documents-4.png" alt="Folder" />
+          <span>Not Pr0n</span>
+        </div>
+        <div class="icon" id="internet-explorer">
+          <a
+            href="https://web.archive.org/web/20091218143438/http://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            target="_blank"
+          >
+            <img
+              src="/static/icon/w2k_internet_explorer-1.png"
+              alt="Internet Explorer"
+            />
+          </a>
+          <span>Internet Explorer</span>
         </div>
       </div>
-      <div class="window-body">
-        <form action="/ascii-art" method="POST">
-          <div>
+
+      <div class="window">
+        <div class="title-bar">
+          <div class="title-bar-text">ASCII Art Generator</div>
+          <div class="title-bar-controls">
+            <button aria-label="Close" onclick="history.back()"></button>
+          </div>
+        </div>
+        <div class="window-body">
+          <form action="/ascii-art" method="GET">
             <div>
-              <label for="text"></label>
-              <textarea
-                name="text"
-                id="text"
-                class="text"
-                placeholder="Enter your text:"
-              ></textarea>
+              <div>
+                <label for="text"></label>
+                <textarea
+                  name="text"
+                  id="text"
+                  class="text"
+                  placeholder="Enter your text:"
+                ></textarea>
+              </div>
             </div>
-          </div>
-          <div>
-            <label for="banner">Banner:</label>
-            <select id="banner" name="banner">
-              <option value="standard">Standard</option>
-              <option value="shadow">Shadow</option>
-              <option value="thinkertoy">Thinkertoy</option>
-            </select>
-          </div>
-          <!-- <div class="generate-area"> -->
-          <button type="submit">Generate ASCII Art</button>
-          <!-- </div> -->
-        </form>
+            <div>
+              <label for="banner">Banner:</label>
+              <select id="banner" name="banner">
+                <option value="standard">Standard</option>
+                <option value="shadow">Shadow</option>
+                <option value="thinkertoy">Thinkertoy</option>
+              </select>
+            </div>
+            <div>
+              {{if .ascii_export }}
+              <div>
+                <p><b>Text:</b> <mark>{{.text}}</mark></p>
+                <p><b>Theme:</b> <mark>{{.banner}}</mark></p>
+              </div>
+              <pre class="result" style="color: black; overflow-x: auto" style="width: 100px">{{.ascii_export}}</pre>
+              {{end}}
+            </div>
+            <!-- <div class="generate-area"> -->
+            <button type="submit">Generate ASCII Art</button>
+            <!-- </div> -->
+          </form>
+        </div>
       </div>
     </div>
   </body>
