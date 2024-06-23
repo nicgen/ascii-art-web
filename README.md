@@ -2,8 +2,9 @@
 
 ## Authors
 
+- [agoncalv](https://zone01normandie.org/git/agoncalv)
 - [ncourtel](https://zone01normandie.org/git/ncourtel)
-- [ngenty](https://zone01normandie.org/git/ngenty)
+- [ngenty](https://github.com/nicgen)
 
 ## Description
 
