@@ -1,0 +1,28 @@
+# Ignore git files
+.git
+.gitignore
+
+# Ignore env files
+.env
+
+# Ignore all .log files, no matter where they're located
+**/*.log
+
+# Ignore any directory named temp
+**/temp
+
+# Licence and readme
+README.md
+LICENCE
+
+# Bash tests
+*.sh
+
+# AIR
+.air.toml
+tmp
+
+# specific
+static/fonts/src
+text/text
+static/export

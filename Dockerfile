@@ -8,32 +8,10 @@ FROM golang:1.22-alpine
 
 WORKDIR /app
 
-# TODO LABEL
 # copy directory files i.e all files ending with .go
 
 # copy all files/folder into /app
 COPY . ./
-# Lib
-# COPY lib ./
-# # CSS
-# COPY static/css ./
-# # Fonts
-# COPY static/fonts/converted ./
-# # HTML templates
-# COPY static/html ./
-# # icons
-# COPY static/icon ./
-# # images
-# COPY static/img ./
-# # ASCII themes
-# COPY static/themes ./
-# # mod & work
-# COPY go.mod ./
-# COPY go.work ./
-# # main
-# COPY main.go ./
-# # COPY *.go ./
-# COPY static ./
 
 # download Go modules and dependencies
 
@@ -41,11 +19,9 @@ COPY . ./
 
 # compile application
 
-RUN go build -o ./ascii_web && apk update && apk add bash
-
-RUN apk add --no-cache bash
-
-# && apk update && apk add bash
+RUN go build -o ./ascii_web
+RUN apk update
+RUN apk add --no-cache bash 
 
 # tells Docker that the container listens on specified network ports at runtime
 
