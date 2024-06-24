@@ -45,23 +45,30 @@ func WriteFile(output, content string) {
 }
 
 // Print or save to a file
-func ExportAscii(input, output string, file_content []string) {
-	content := TransformAscii(input, file_content)
+func ExportAscii(input, output string, file_content []string) error {
+	content, err := TransformAscii(input, file_content)
+	if err != nil {
+		return err
+	}
 	if output != "" {
 		WriteFile(output, content)
 	} else {
 		fmt.Printf("%s", content)
 	}
+	return nil
 }
 
 // Return ASCII and export to a txt file
-func BothAscii(input, output string, file_content []string) string {
+func BothAscii(input, output string, file_content []string) (string, error) {
 	// fmt.Println("[BothAscii]: ", output)
-	content := TransformAscii(input, file_content)
+	content, err := TransformAscii(input, file_content)
+	if err != nil {
+		return "", err
+	}
 	if output != "" {
 		WriteFile(output, content)
 	} else {
 		fmt.Printf("%s", content)
 	}
-	return content
+	return content, nil
 }

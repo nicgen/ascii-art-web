@@ -2,9 +2,10 @@ package ASCIIWEB
 
 import (
 	"ASCII"
-	"fmt"
+	"log"
 	"net/http"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"text/template"
 )
@@ -41,33 +42,28 @@ func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
 
 // homeHandler serves the main page
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(http.StatusMethodNotAllowed)
-	data := map[string]string{
-		"title":     "ASCII-ART-WEB",
-		"errorcode": string(http.StatusMethodNotAllowed),
-	}
 	if r.URL.Path != "/" {
-		w.WriteHeader(404) // return error 404 (forced, bad practice)
-		RenderTemplate(w, "404", nil)
+		Error(w, http.StatusNotFound, "not found")
+		return
 	} else {
-		RenderTemplate(w, "index", data)
+		RenderTemplate(w, "index", nil)
 	}
 }
 
 // asciiArtHandler handles the conversion of text to ASCII art
 func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
-		// code := "Invalid request method"
-		// data := map[string]string{
-		// 	"errorcode": string(http.StatusMethodNotAllowed),
-		// }
-		w.WriteHeader(404) // error code
-		RenderTemplate(w, "404", 404)
+		Error(w, http.StatusMethodNotAllowed, "method not allowed")
 		return
 	}
 	r.ParseForm()
 	text := strings.ReplaceAll(r.FormValue("text"), "\r\n", `\n`) //replace \r\n of textarea new line by \n
+	// for _, char := range text {
+	// 	if char < 32 || char > 126 {
+	// 		Error(w, http.StatusInternalServerError, "Error 500: Internal Server Error")
+	// 		return
+	// 	}
+	// }
 	banner := r.Form.Get("banner")
 	// Determine the banner file to use
 	var themeFile string
@@ -85,7 +81,11 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Convert the text to ASCII art
 	file_content := ASCII.FileToLine(themeFile)
-	ascii_art := ASCII.BothAscii(text, "static/export/ascii-art.txt", file_content)
+	ascii_art, err := ASCII.BothAscii(text, "static/export/ascii-art.txt", file_content)
+	if err != nil {
+		Error(w, http.StatusInternalServerError, err.Error())
+		return
+	}
 
 	data := map[string]string{
 		"text":         text,
@@ -97,4 +97,24 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	// 	http.Error(w, fmt.Sprintf("Failed to convert text to ASCII art: %v", err), http.StatusInternalServerError)
 	// 	return
 	// }
+}
+
+func Error(w http.ResponseWriter, status int, message string) {
+    w.WriteHeader(status)
+	error_id := strconv.Itoa(status)
+    tmpl, err := template.ParseFiles("static/html/templates/error.html")
+    if err != nil {
+        http.Error(w, "Server Error", http.StatusInternalServerError)
+        log.Printf("Error parsing template: %v", err)
+        return
+    }
+    data := map[string]string{
+		"error_id": error_id,
+		"message": message,
+	}
+    err = tmpl.Execute(w, data)
+    if err != nil {
+        http.Error(w, "Server Error", http.StatusInternalServerError)
+        log.Printf("Error executing template: %v", err)
+    }
 }
