@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ASCII-ART-WEB</title>
+    <title>{{ .title }}</title>
     <link rel="stylesheet" href="/static/css/style.css" type="text/css" />
 
     <link
@@ -71,7 +71,7 @@
           <form action="/ascii-art" method="GET">
             <div>
               <div>
-                <label for="text"></label>
+                <label for="text">Text:</label>
                 <textarea
                   name="text"
                   id="text"
@@ -81,25 +81,34 @@
               </div>
             </div>
             <div>
-              <label for="banner">Banner:</label>
-              <select id="banner" name="banner">
-                <option value="standard">Standard</option>
-                <option value="shadow">Shadow</option>
-                <option value="thinkertoy">Thinkertoy</option>
-              </select>
+              <div class="field-row-stacked">
+                <label for="banner">Banner:</label>
+                <select id="banner" name="banner">
+                  <option value="standard">Standard</option>
+                  <option value="shadow">Shadow</option>
+                  <option value="thinkertoy">Thinkertoy</option>
+                </select>
+                <button type="submit">Generate ASCII Art</button>
+              </div>
+              <!-- block unused but useful to know -->
+              <!-- {{if not .ascii_export }}{{end}} -->
             </div>
+            {{if .ascii_export }}
             <div>
-              {{if .ascii_export }}
               <div>
-                <p><b>Text:</b> <mark>{{.text}}</mark></p>
-                <p><b>Theme:</b> <mark>{{.banner}}</mark></p>
+                <div class="field-row-stacked">
+                </div>
               </div>
               <pre class="result" style="color: black; overflow-x: auto" style="width: 100px">{{.ascii_export}}</pre>
-              {{end}}
+              <a href="/static/export/ascii-art.txt" download="ascii-art-{{.banner}}.txt">Download</a>
             </div>
-            <!-- <div class="generate-area"> -->
-            <button type="submit">Generate ASCII Art</button>
-            <!-- </div> -->
+            <div class="status-bar">
+              <!-- <p></p> -->
+              <!-- <p class="status-bar-field">Press F1 for help</p> -->
+              <p class="status-bar-field"><b>Text: </b>{{.text}}</p>
+              <p class="status-bar-field"><b>Theme: </b>{{.banner}}</p>
+            </div>
+            {{end}}
           </form>
         </div>
       </div>
