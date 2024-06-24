@@ -25,4 +25,4 @@ tmp
 # specific
 static/fonts/src
 text/text
-static/export
+# static/export
