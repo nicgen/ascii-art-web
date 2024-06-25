@@ -4,6 +4,9 @@
 
 FROM golang:1.22-alpine
 
+LABEL author="Team"
+LABEL description="Description"
+
 # create a working directory inside the image
 
 WORKDIR /app

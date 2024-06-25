@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-container_name="web"
 image_name="ascii_web"
+container_name="web"
 
 sudo docker stop $container_name & pid=$!
 wait $pid

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-container_name="web"
 image_name="ascii_web"
+container_name="web"
 
 sudo echo "Let's build the docker image..."
 # if sudo docker image build -f Dockerfile -t $image_name . & pid=$!; wait $pid;
@@ -15,7 +15,7 @@ sudo docker images & pid=$!
 wait $pid
 if sudo docker container run -p 0:8080 --detach --name $container_name $image_name & pid=$!;wait $pid;
 then
-  container_port=$(sudo docker container port web | tail -n 1 | grep --only-matching -P ":(\d+)")
+  container_port=$(sudo docker container port $container_name | tail -n 1 | grep --only-matching -P ":(\d+)")
   echo "Container $container_name from $image_name image is now started on port$container_port"
   sudo docker exec -it $container_name bash
 else
@@ -28,4 +28,3 @@ fi
 # [source](https://askubuntu.com/a/682547)
 # `>/dev/null 2>&1` will prevent messages from the browser to be outputted to the terminal's window; & will put the process into the background
 # `disown` will remove the job / process from the job list, preventing a SIGHUP signal to be propagated to it. 
-
