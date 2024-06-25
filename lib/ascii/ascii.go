@@ -18,7 +18,10 @@ func Ascii() {
 	}
 
 	// Open the ASCII theme file
-	file_content := FileToLine(theme)
+	file_content, err := FileToLine(theme)
+	if err != nil {
+		panic(err)
+	}
 	// Export/Print the result
 	ExportAscii(input, output, file_content)
 }

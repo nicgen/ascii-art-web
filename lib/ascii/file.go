@@ -2,17 +2,18 @@ package ASCII
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"log"
 	"os"
 )
 
 // Open a file & return a slice of line
-func FileToLine(theme string) (file_content []string) {
+func FileToLine(theme string) (file_content []string, err error) {
 	// Open theme file
 	file, err := os.Open(theme)
 	if err != nil {
-		panic(err)
+		return nil, errors.New("the selected theme does not exist")
 	}
 	// Close file on exit and check for its returned error
 	defer func() {
@@ -33,7 +34,7 @@ func FileToLine(theme string) (file_content []string) {
 		fmt.Fprintln(os.Stderr, "reading standard input:", err)
 	}
 	file_content = append(file_content, "")
-	return
+	return file_content, nil
 }
 
 func WriteFile(output, content string) {

@@ -2,6 +2,7 @@ package ASCIIWEB
 
 import (
 	"ASCII"
+	"fmt"
 	"log"
 	"net/http"
 	"path/filepath"
@@ -55,13 +56,16 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 		themeFile = "static/themes/shadow.txt"
 	case "thinkertoy":
 		themeFile = "static/themes/thinkertoy.txt"
-	default:
-		themeFile = "static/themes/standard.txt"
+	}
+
+	fmt.Println(themeFile)
+	// Convert the text to ASCII art
+	file_content, err := ASCII.FileToLine(themeFile)
+	if err != nil {
+		Error(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	// Convert the text to ASCII art
-	file_content := ASCII.FileToLine(themeFile)
 	ascii_art, err := ASCII.BothAscii(text, "static/export/ascii-art.txt", file_content)
 	if err != nil {
 		Error(w, http.StatusInternalServerError, err.Error())
