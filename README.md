@@ -13,6 +13,7 @@ Ascii-art-web consists in creating and running a server, in which it will be pos
 ## Requirements
 
 - [Go](https://golang.org/dl/) (min version 1.22.0)
+- [Docker](https://docs.docker.com/engine/install/ubuntu/#installation-methods) if you want to buid and run the container version.
 
 ## Install
 
@@ -25,15 +26,37 @@ cd ascii-art-web
 
 ## Usage
 
+### Manualy
+
 1. Run the app:
 
 ```bash
 go run main.go*
 ```
 
-2. Go to `localhost:8080` and test-it!
+2. Go to `localhost:8080` and test it!
 
 3. Have fun
+
+### With Docker
+
+1. Build the docker image
+
+```sh
+bash docker_build.sh 
+```
+
+2. Go to the specified adress `localhost:<port>` and test it!
+
+3. Have fun
+
+#### Uninstall
+
+When finished, you can stop all containers and delete the image with the command:
+
+```sh
+bash docker_delete.sh 
+```
 
 ## Project structure:
 
