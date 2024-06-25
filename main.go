@@ -23,8 +23,8 @@ func main() {
 		WriteTimeout:      10 * time.Second,  // temps maximum d'écriture de la réponse
 		IdleTimeout:       120 * time.Second, // temps maximum entre deux rêquetes
 		MaxHeaderBytes:    1 << 20,           // 1 MB // maxinmum de bytes que le serveur va lire
-		// ReadTimeout:  1000,
-		// WriteTimeout: 1000,
+		ReadTimeout:       1000,
+		// WriteTimeout:      1000,
 	}
 	fmt.Println("Starting server on port 8080")
 	// server.ListenAndServe()

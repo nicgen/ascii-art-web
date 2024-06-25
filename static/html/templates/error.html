@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Error 404</title>
+    <title>Error {{if . }}{{.error_id}}{{end}}</title>
 
     <link
       rel="apple-touch-icon"
@@ -30,7 +30,7 @@
   <body>
     <main>
       <header>
-        <h1 class="emotion">:(</h1>
+        <h1 class="emotion">:( {{if . }}Error {{.error_id}}{{end}}</h1>
       </header>
       <br />
       {{if . }}Error {{.error_id}}: {{.message}}{{end}}

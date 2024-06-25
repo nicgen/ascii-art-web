@@ -15,20 +15,6 @@ type Page struct {
 	Body  []byte
 }
 
-// func (p *Page) save() error {
-// 	filename := p.Title + ".txt"
-// 	return os.WriteFile(filename, p.Body, 0600)
-// }
-
-// func LoadPage(title string) (*Page, error) {
-// 	filename := title + ".txt"
-// 	body, err := os.ReadFile(filename)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	return &Page{Title: title, Body: body}, nil
-// }
-
 // renderTemplate renders the template with given data
 func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
 	tmplPath := filepath.Join("static/html/templates", tmpl+".html") //Set the path of the html files we want to tmplPath, we join "templates" and the html file name
@@ -58,12 +44,7 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	r.ParseForm()
 	text := strings.ReplaceAll(r.FormValue("text"), "\r\n", `\n`) //replace \r\n of textarea new line by \n
-	// for _, char := range text {
-	// 	if char < 32 || char > 126 {
-	// 		Error(w, http.StatusInternalServerError, "Error 500: Internal Server Error")
-	// 		return
-	// 	}
-	// }
+
 	banner := r.Form.Get("banner")
 	// Determine the banner file to use
 	var themeFile string
@@ -100,21 +81,21 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func Error(w http.ResponseWriter, status int, message string) {
-    w.WriteHeader(status)
+	w.WriteHeader(status)
 	error_id := strconv.Itoa(status)
-    tmpl, err := template.ParseFiles("static/html/templates/error.html")
-    if err != nil {
-        http.Error(w, "Server Error", http.StatusInternalServerError)
-        log.Printf("Error parsing template: %v", err)
-        return
-    }
-    data := map[string]string{
-		"error_id": error_id,
-		"message": message,
+	tmpl, err := template.ParseFiles("static/html/templates/error.html")
+	if err != nil {
+		http.Error(w, "Server Error", http.StatusInternalServerError)
+		log.Printf("Error parsing template: %v", err)
+		return
 	}
-    err = tmpl.Execute(w, data)
-    if err != nil {
-        http.Error(w, "Server Error", http.StatusInternalServerError)
-        log.Printf("Error executing template: %v", err)
-    }
+	data := map[string]string{
+		"error_id": error_id,
+		"message":  message,
+	}
+	err = tmpl.Execute(w, data)
+	if err != nil {
+		http.Error(w, "Server Error", http.StatusInternalServerError)
+		log.Printf("Error executing template: %v", err)
+	}
 }
