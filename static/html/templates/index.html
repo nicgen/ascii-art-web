@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ .title }}</title>
+    <title>Ascii-Art-Web</title>
     <link rel="stylesheet" href="/static/css/style.css" type="text/css" />
 
     <link
@@ -96,11 +96,20 @@
             {{if .ascii_export }}
             <div>
               <div>
-                <div class="field-row-stacked">
-                </div>
+                <div class="field-row-stacked"></div>
               </div>
-              <pre class="result" style="color: black; overflow-x: auto" style="width: 100px">{{.ascii_export}}</pre>
-              <a href="/static/export/ascii-art.txt" download="ascii-art-{{.banner}}.txt">Download</a>
+              <pre
+                class="result"
+                style="color: black; overflow-x: auto"
+                style="width: 100px"
+              >
+{{.ascii_export}}</pre
+              >
+              <a
+                href="/static/export/ascii-art.txt"
+                download="ascii-art-{{.banner}}.txt"
+                >Download</a
+              >
             </div>
             <div class="status-bar">
               <!-- <p></p> -->
