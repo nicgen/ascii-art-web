@@ -42,7 +42,7 @@ func WriteFile(output, content string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("The result file: written successfully on " + output + ".")
+	// fmt.Println("The result file: written successfully on " + output + ".")
 }
 
 // Print or save to a file

@@ -82,6 +82,7 @@
             </div>
             <div>
               <div class="field-row-stacked">
+
                 <label for="banner">Banner:</label>
                 <select id="banner" name="banner">
                   <option value="standard">Standard</option>
@@ -89,7 +90,19 @@
                   <option value="thinkertoy">Thinkertoy</option>
                   <option value="test">test</option>
                 </select>
+
+                <fieldset id="type" name="type">
+                  <legend>Select the type of file:</legend>
+                  <input type="radio" name="type" id="texte" value="texte" checked/>
+                  <label for="texte">Texte</label>
+                  <input type="radio" name="type" id="markdown" value="markdown" />
+                  <label for="markdown">Markdown</label>
+                  <input type="radio" name="type" id="nfo" value="nfo" />
+                  <label for="nfo">NFO</label>
+                </fieldset>
+
                 <button type="submit">Generate ASCII Art</button>
+
               </div>
               <!-- block unused but useful to know -->
               <!-- {{if not .ascii_export }}{{end}} -->
@@ -99,18 +112,7 @@
               <div>
                 <div class="field-row-stacked"></div>
               </div>
-              <pre
-                class="result"
-                style="color: black; overflow-x: auto"
-                style="width: 100px"
-              >
-{{.ascii_export}}</pre
-              >
-              <a
-                href="/static/export/ascii-art.txt"
-                download="ascii-art-{{.banner}}.txt"
-                >Download</a
-              >
+              <pre class="result" style="color: black; overflow-x: auto" style="width: 100px">{{.ascii_export}}</pre><a href="{{.url_dl}}" download="ascii-art-{{.banner}}{{.file_ext}}">Download</a>
             </div>
             <div class="status-bar">
               <!-- <p></p> -->

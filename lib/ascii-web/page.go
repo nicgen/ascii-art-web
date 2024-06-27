@@ -2,6 +2,7 @@ package ASCIIWEB
 
 import (
 	"ASCII"
+	"fmt"
 	"log"
 	"net/http"
 	"path/filepath"
@@ -56,7 +57,26 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	case "thinkertoy":
 		themeFile = "static/themes/thinkertoy.txt"
 	}
-	
+
+	// file type
+
+	file_type := r.Form.Get("type")
+	// Determine the banner file to use
+	var file_ext string
+	switch file_type {
+	case "texte":
+		file_ext = ".txt"
+	case "markdown":
+		file_ext = ".nfo"
+	case "nfo":
+		file_ext = ".nfo"
+		// case "thinkertoy":
+		// 	file_ext = "static/themes/thinkertoy.txt"
+	}
+
+	url_dl := "static/export/ascii-art" + banner + file_ext
+	fmt.Println(url_dl)
+
 	// Convert the text to ASCII art
 	file_content, err := ASCII.FileToLine(themeFile)
 	if err != nil {
@@ -64,7 +84,7 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ascii_art, err := ASCII.BothAscii(text, "static/export/ascii-art.txt", file_content)
+	ascii_art, err := ASCII.BothAscii(text, "static/export/ascii-art"+banner+file_ext, file_content)
 	if err != nil {
 		Error(w, http.StatusInternalServerError, err.Error())
 		return
@@ -74,7 +94,10 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 		"text":         text,
 		"banner":       banner,
 		"ascii_export": ascii_art,
+		"url_dl":       url_dl,
+		"file_ext":     file_ext,
 	}
+
 	RenderTemplate(w, "index", data)
 	// if err != nil {
 	// 	http.Error(w, fmt.Sprintf("Failed to convert text to ASCII art: %v", err), http.StatusInternalServerError)
