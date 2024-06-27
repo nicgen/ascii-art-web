@@ -63,15 +63,17 @@ func ExportAscii(input, output string, file_content []string) error {
 func BothAscii(input, output, ext string, file_content []string) (string, error) {
 	fmt.Println("[BothAscii]: ", output, " ext:", ext)
 	content, err := TransformAscii(input, file_content)
+	var content_formatted string
 	if err != nil {
 		return "", err
 	}
 	if output != "" {
 		if ext == ".md" {
-			fmt.Println("YOLO")
-			content = "# ASCII_ART_EXPORT\n\n```text\n" + content + "\n```"
+			content_formatted = "# ASCII_ART_EXPORT\n\n```text\n" + content + "\n```"
+		} else {
+			content_formatted = content
 		}
-		WriteFile(output, content)
+		WriteFile(output, content_formatted)
 	} else {
 		fmt.Printf("%s", content)
 	}
