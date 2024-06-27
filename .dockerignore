@@ -24,4 +24,5 @@ tmp
 
 # specific
 static/fonts/src
+static/export/*.*
 text/text
