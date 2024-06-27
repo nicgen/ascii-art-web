@@ -67,11 +67,9 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	case "texte":
 		file_ext = ".txt"
 	case "markdown":
-		file_ext = ".nfo"
+		file_ext = ".md"
 	case "nfo":
 		file_ext = ".nfo"
-		// case "thinkertoy":
-		// 	file_ext = "static/themes/thinkertoy.txt"
 	}
 
 	url_dl := "static/export/ascii-art" + banner + file_ext
