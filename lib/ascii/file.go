@@ -60,13 +60,17 @@ func ExportAscii(input, output string, file_content []string) error {
 }
 
 // Return ASCII and export to a txt file
-func BothAscii(input, output string, file_content []string) (string, error) {
-	// fmt.Println("[BothAscii]: ", output)
+func BothAscii(input, output, ext string, file_content []string) (string, error) {
+	fmt.Println("[BothAscii]: ", output, " ext:", ext)
 	content, err := TransformAscii(input, file_content)
 	if err != nil {
 		return "", err
 	}
 	if output != "" {
+		if ext == ".md" {
+			fmt.Println("YOLO")
+			content = "# ASCII_ART_EXPORT\n\n```text\n" + content + "\n```"
+		}
 		WriteFile(output, content)
 	} else {
 		fmt.Printf("%s", content)
