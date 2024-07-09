@@ -19,7 +19,7 @@ LICENCE
 *.sh
 
 # AIR
-.air.toml
+#.air.toml
 tmp
 
 # specific
