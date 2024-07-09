@@ -5,7 +5,9 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
+	"path/filepath"
 )
 
 // Open a file & return a slice of line
@@ -59,6 +61,71 @@ func ExportAscii(input, output string, file_content []string) error {
 	return nil
 }
 
+func DownloadHandler(w http.ResponseWriter, r *http.Request) {
+	filePath := "static/export/file.txt" // Replace with the actual path to your file
+	file, err := os.Open(filePath)
+	if err != nil {
+		http.Error(w, "File not found", http.StatusNotFound)
+		return
+	}
+	defer file.Close()
+
+	fileStat, err := file.Stat()
+	if err != nil {
+		http.Error(w, "Failed to get file info", http.StatusInternalServerError)
+		return
+	}
+
+	fileName := filepath.Base(filePath)
+
+	// Set the headers
+	w.Header().Set("Content-Type", "application/txt") // Replace with the appropriate MIME type for your file
+	w.Header().Set("Content-Length", fmt.Sprintf("%d", fileStat.Size()))
+	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=%s", fileName))
+
+	// Serve the file
+	http.ServeFile(w, r, filePath)
+}
+
+// func DownloadHandler(w http.ResponseWriter, r *http.Request) {
+// 	format := r.URL.Query().Get("format")
+// 	if format != "nfo" && format != "txt" {
+// 		http.Error(w, "Invalid format", http.StatusBadRequest)
+// 		return
+// 	}
+
+// 	filePath := fmt.Sprintf("/static/export/file%s", format) // Replace with actual path
+// 	fmt.Println("FILEPATH: ", filePath)
+// 	file, err := os.Open(filePath)
+// 	if err != nil {
+// 		http.Error(w, "File not found", http.StatusNotFound)
+// 		return
+// 	}
+// 	defer file.Close()
+
+// 	fileStat, err := file.Stat()
+// 	if err != nil {
+// 		http.Error(w, "Failed to get file info", http.StatusInternalServerError)
+// 		return
+// 	}
+
+// 	fileName := filepath.Base(filePath)
+
+// 	// Set the headers
+// 	contentType := "text/plain"
+// 	if format == "nfo" {
+// 		contentType = "application/x-nfo"
+// 	}
+
+// 	w.Header().Set("Content-Type", contentType)
+// 	w.Header().Set("Content-Length", fmt.Sprintf("%d", fileStat.Size()))
+// 	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=%s", fileName))
+
+// 	// Serve the file
+// 	fmt.Println("FILEPATH: ", filePath)
+// 	http.ServeFile(w, r, filePath)
+// }
+
 // Return ASCII and export to a txt file
 func BothAscii(input, output, ext string, file_content []string) (string, error) {
 	fmt.Println("[BothAscii]: ", output, " ext:", ext)
@@ -73,7 +140,9 @@ func BothAscii(input, output, ext string, file_content []string) (string, error)
 		} else {
 			content_formatted = content
 		}
-		WriteFile(output, content_formatted)
+		// WriteFile(output, content_formatted)
+		WriteFile("static/export/file.txt", content_formatted)
+		// WriteFile("static/export/file.nfo", content_formatted)
 	} else {
 		fmt.Printf("%s", content)
 	}

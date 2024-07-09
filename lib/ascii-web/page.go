@@ -82,7 +82,9 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ascii_art, err := ASCII.BothAscii(text, "static/export/ascii-art"+banner+file_ext, file_ext, file_content)
+	// ascii_art, err := ASCII.BothAscii(text, "static/export/ascii-art"+banner+file_ext, file_ext, file_content)
+	ascii_art, err := ASCII.BothAscii(text, "static/export/file.txt", file_ext, file_content)
+
 	if err != nil {
 		Error(w, http.StatusInternalServerError, err.Error())
 		return

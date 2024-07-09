@@ -91,7 +91,7 @@
                   <option value="test">test</option>
                 </select>
 
-                <fieldset id="type" name="type">
+                <!-- <fieldset id="type" name="type">
                   <legend>Select the type of file:</legend>
                   <input type="radio" name="type" id="texte" value="texte" checked/>
                   <label for="texte">Texte</label>
@@ -99,7 +99,15 @@
                   <label for="markdown">Markdown</label>
                   <input type="radio" name="type" id="nfo" value="nfo" />
                   <label for="nfo">NFO</label>
-                </fieldset>
+                </fieldset> -->
+
+                <!-- <fieldset>
+                  <legend>Choose file format:</legend>
+                    <input type="radio" id="nfo" name="format" value="nfo" checked>
+                    <label for="nfo">NFO</label>
+                    <input type="radio" id="txt" name="format" value="txt">
+                    <label for="txt">TXT</label>
+              </fieldset> -->
 
                 <button type="submit">Generate ASCII Art</button>
 
@@ -112,7 +120,7 @@
               <div>
                 <div class="field-row-stacked"></div>
               </div>
-              <pre class="result" style="color: black; overflow-x: auto" style="width: 100px">{{.ascii_export}}</pre><a href="{{.url_dl}}" download="ascii-art-{{.banner}}{{.file_ext}}">Download</a>
+              <pre class="result" style="color: black; overflow-x: auto" style="width: 100px">{{.ascii_export}}</pre><a href="/download" download="ascii-art-{{.banner}}{{.file_ext}}">Download</a>
             </div>
             <div class="status-bar">
               <!-- <p></p> -->
