@@ -79,7 +79,7 @@ func DownloadHandler(w http.ResponseWriter, r *http.Request) {
 	fileName := filepath.Base(filePath)
 
 	// Set the headers
-	w.Header().Set("Content-Type", "application/txt") // Replace with the appropriate MIME type for your file
+	w.Header().Set("Content-Type", "text/plain") // Replace with the appropriate MIME type for your file
 	w.Header().Set("Content-Length", fmt.Sprintf("%d", fileStat.Size()))
 	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=%s", fileName))
 
