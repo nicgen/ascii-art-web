@@ -5,9 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
-	"net/http"
 	"os"
-	"path/filepath"
 )
 
 // Open a file & return a slice of line
@@ -59,32 +57,6 @@ func ExportAscii(input, output string, file_content []string) error {
 		fmt.Printf("%s", content)
 	}
 	return nil
-}
-
-func DownloadHandler(w http.ResponseWriter, r *http.Request) {
-	filePath := "static/export/file.txt" // Replace with the actual path to your file
-	file, err := os.Open(filePath)
-	if err != nil {
-		http.Error(w, "File not found", http.StatusNotFound)
-		return
-	}
-	defer file.Close()
-
-	fileStat, err := file.Stat()
-	if err != nil {
-		http.Error(w, "Failed to get file info", http.StatusInternalServerError)
-		return
-	}
-
-	fileName := filepath.Base(filePath)
-
-	// Set the headers
-	w.Header().Set("Content-Type", "text/plain") // Replace with the appropriate MIME type for your file
-	w.Header().Set("Content-Length", fmt.Sprintf("%d", fileStat.Size()))
-	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=%s", fileName))
-
-	// Serve the file
-	http.ServeFile(w, r, filePath)
 }
 
 // func DownloadHandler(w http.ResponseWriter, r *http.Request) {

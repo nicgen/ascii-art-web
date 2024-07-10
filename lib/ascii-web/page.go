@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -103,6 +104,32 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	// 	http.Error(w, fmt.Sprintf("Failed to convert text to ASCII art: %v", err), http.StatusInternalServerError)
 	// 	return
 	// }
+}
+
+func DownloadHandler(w http.ResponseWriter, r *http.Request) {
+	filePath := "static/export/file.txt" // Replace with the actual path to your file
+	file, err := os.Open(filePath)
+	if err != nil {
+		http.Error(w, "File not found", http.StatusNotFound)
+		return
+	}
+	defer file.Close()
+
+	fileStat, err := file.Stat()
+	if err != nil {
+		http.Error(w, "Failed to get file info", http.StatusInternalServerError)
+		return
+	}
+
+	fileName := filepath.Base(filePath)
+
+	// Set the headers
+	w.Header().Set("Content-Type", "text/plain") // Replace with the appropriate MIME type for your file
+	w.Header().Set("Content-Length", fmt.Sprintf("%d", fileStat.Size()))
+	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=%s", fileName))
+
+	// Serve the file
+	http.ServeFile(w, r, filePath)
 }
 
 func Error(w http.ResponseWriter, status int, message string) {

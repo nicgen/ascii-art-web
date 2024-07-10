@@ -1,7 +1,6 @@
 package main
 
 import (
-	"ASCII"
 	"ASCIIWEB"
 	"fmt"
 	"log"
@@ -12,7 +11,7 @@ import (
 func main() {
 	http.HandleFunc("/", ASCIIWEB.HomeHandler)
 	http.HandleFunc("/ascii-art", ASCIIWEB.AsciiArtHandler)
-	http.HandleFunc("/download", ASCII.DownloadHandler)
+	http.HandleFunc("/download", ASCIIWEB.DownloadHandler)
 
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
